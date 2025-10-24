@@ -1,0 +1,187 @@
+/* Layout de base */
+.page {
+    min-height: 100vh;
+    background: #f9fafb;
+    color: #111827;
+    padding: 16px;
+}
+
+.page__wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.header__link {
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+/* UI primitives */
+.box {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.btn {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    cursor: pointer;
+}
+
+.btn--primary {
+    background: #111827;
+    color: #fff;
+}
+
+.field {
+    display: block;
+    margin-bottom: 12px;
+}
+
+.field__label {
+    font-size: 13px;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.input,
+.textarea,
+.select {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+.textarea {
+    resize: vertical;
+}
+
+/* Grilles / listes */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.grid-5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.cards-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.list-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.list-card__top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.muted {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.small {
+    font-size: 13px;
+    color: #374151;
+}
+
+/* Pagination */
+.pager {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+/* Tag selector */
+.selector {
+    display: grid;
+    gap: 12px;
+}
+
+.selector__group {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.selector__title {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.selector__tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tag {
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    color: #111827;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.tag--on {
+    border-color: #2563eb;
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+/* Titres / zones */
+.title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.section-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.hr-top {
+    border-top: 1px solid #e5e7eb;
+    margin-top: 12px;
+    padding-top: 8px;
+}
+
+/* Helpers */
+.mt-8 {
+    margin-top: 8px;
+}
+
+.mb-8 {
+    margin-bottom: 8px;
+}
+
+.mb-12 {
+    margin-bottom: 12px;
+}

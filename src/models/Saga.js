@@ -1,17 +1,21 @@
 import mongoose from "mongoose";
 
-const bookSchema = new mongoose.Schema({
+const sagaSchema = new mongoose.Schema({
+    // Titre de la saga (ex: "La Passe-Miroir")
     title: { type: String, required: true, trim: true },
+    // Auteur·rice(s) de la saga (ex: "Christelle Dabos")
     authors: [{ type: String }],
-    tags: [{ type: String }],
-    status: { type: String, enum: ["À lire", "En cours", "Terminé", "Abandonné"], default: "À lire" },
-    avgRating: { type: Number, default: 0 },
 
-    // Tags par catégorie (références à Tag)
+    // Catégories (mêmes Tag que pour Book)
     genres: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
     tropes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
     triggers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
     ages: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
+
+    // Livres appartenant à la saga
+    books: [{ type: mongoose.Schema.Types.ObjectId, ref: "Book" }],
 }, { timestamps: true });
 
-export default mongoose.model("Book", bookSchema);
+sagaSchema.index({ title: 1 });
+
+export default mongoose.model("Saga", sagaSchema);
