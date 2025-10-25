@@ -185,3 +185,100 @@
 .mb-12 {
     margin-bottom: 12px;
 }
+
+/* Modal minimal */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+}
+
+.modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .4);
+}
+
+.modal__panel {
+    position: relative;
+    margin: 6vh auto;
+    max-width: 720px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+}
+
+.modal__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.modal__title {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.modal__body {
+    display: grid;
+    gap: 16px;
+}
+
+.modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+/* Petites listes */
+.list {
+    display: grid;
+    gap: 8px;
+}
+
+.list__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.list__title {
+    font-weight: 600;
+}
+
+/* Utilitaires si besoin */
+.row-8 {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.stack-16 {
+    display: grid;
+    gap: 16px;
+}
+
+.mt-8 {
+    margin-top: 8px;
+}
+
+.mt-12 {
+    margin-top: 12px;
+}
+
+.small {
+    font-size: 12px;
+}
+
+.btn--ghost {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}

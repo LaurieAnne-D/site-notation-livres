@@ -19,7 +19,7 @@ export default function SagasList({ token, onPickSaga }) {
     const [q, setQ] = useState("");
     const [sort, setSort] = useState("-createdAt");
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(10);
+    const [limit] = useState(10);
     const [data, setData] = useState({ items: [], total: 0, pages: 0 });
     const [busy, setBusy] = useState(false);
 

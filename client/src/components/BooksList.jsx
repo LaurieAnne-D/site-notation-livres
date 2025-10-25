@@ -1,21 +1,25 @@
+// src/components/BooksList.jsx
 import { useEffect, useMemo, useState } from "react";
 import Box from "./ui/Box";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
 import { API_BASE } from "../lib/api";
+import { formatDate, isFutureDate } from "../lib/dates";
 
 function names(arr) {
     // Convertit un tableau d’ObjectId ou d’objets { _id, name } en noms
-    return (arr || []).map((t) => (typeof t === "string" ? t : t?.name)).filter(Boolean);
+    return (arr || [])
+        .map((t) => (typeof t === "string" ? t : t?.name))
+        .filter(Boolean);
 }
 
 export default function BooksList({ token, onPickBook }) {
     const [q, setQ] = useState("");
-    const [tag, setTag] = useState("");           // (héritage) pour créer vite fait un livre
+    const [tag, setTag] = useState(""); // (héritage) pour création rapide
     const [status, setStatus] = useState("");
     const [sort, setSort] = useState("-createdAt");
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(10);
+    const [limit] = useState(10);
     const [data, setData] = useState({ items: [], total: 0, pages: 0 });
     const [busy, setBusy] = useState(false);
 
@@ -26,7 +30,7 @@ export default function BooksList({ token, onPickBook }) {
         if (sort) p.set("sort", sort);
         p.set("page", String(page));
         p.set("limit", String(limit));
-        // IMPORTANT: on veut les noms des catégories
+        // On veut les noms des catégories + la saga
         p.set("populate", "1");
         return p.toString();
     }, [q, status, sort, page, limit]);
@@ -38,7 +42,9 @@ export default function BooksList({ token, onPickBook }) {
             .then((r) => r.json())
             .then((d) => !stop && setData(d))
             .finally(() => !stop && setBusy(false));
-        return () => { stop = true; };
+        return () => {
+            stop = true;
+        };
     }, [query]);
 
     async function createQuickBook() {
@@ -65,7 +71,7 @@ export default function BooksList({ token, onPickBook }) {
 
     return (
         <Box>
-            <div className="mb-8" style={{ display: "flex", justifyContent: "space-between" }}>
+            <div className="row-space mb-8">
                 <h2 className="title">Livres</h2>
                 <Button onClick={createQuickBook}>+ Ajouter</Button>
             </div>
@@ -80,6 +86,8 @@ export default function BooksList({ token, onPickBook }) {
                     <option>En cours</option>
                     <option>Terminé</option>
                     <option>Abandonné</option>
+                    <option>À paraître</option>
+                    <option>Wishlist</option>
                 </select>
                 <select className="select" value={sort} onChange={(e) => setSort(e.target.value)}>
                     <option value="-createdAt">Plus récents</option>
@@ -106,28 +114,37 @@ export default function BooksList({ token, onPickBook }) {
                         const trg = names(b.triggers).join(", ");
                         const ag = names(b.ages).join(", ");
                         const legacy = (b.tags || []).join(", "); // affichage optionnel
+                        const releaseTxt = b.releaseDate
+                            ? `${formatDate(b.releaseDate)}${isFutureDate(b.releaseDate) ? " (à venir)" : ""}`
+                            : "";
 
                         return (
                             <div key={b._id} className="list-card" onClick={() => onPickBook(b)}>
                                 <div className="list-card__top">
-                                    <div style={{ fontWeight: 600 }}>{b.title}</div>
-                                    <div className="muted">{new Date(b.createdAt).toLocaleDateString()}</div>
+                                    <div className="list-card__title">{b.title}</div>
+                                    <div className="muted small">{new Date(b.createdAt).toLocaleDateString()}</div>
                                 </div>
 
-                                <div className="small">{(b.authors || []).join(", ")}</div>
+                                <div className="small">{(b.authors || []).join(", ") || "—"}</div>
 
-                                {/* Lignes d’infos */}
-                                <div className="muted mt-8">Statut: {b.status}</div>
-                                {g && <div className="muted mt-8">Genres: {g}</div>}
-                                {trp && <div className="muted">Tropes: {trp}</div>}
-                                {trg && <div className="muted">Triggers: {trg}</div>}
-                                {ag && <div className="muted">Âges: {ag}</div>}
+                                {/* Saga si disponible */}
+                                {b.saga?.title && <div className="muted mt-8">Saga : {b.saga.title}</div>}
+
+                                {/* Date de sortie si dispo */}
+                                {releaseTxt && <div className="muted mt-4">Sortie : {releaseTxt}</div>}
+
+                                {/* Infos */}
+                                <div className="muted mt-8">Statut : {b.status}</div>
+                                {g && <div className="muted mt-8">Genres : {g}</div>}
+                                {trp && <div className="muted">Tropes : {trp}</div>}
+                                {trg && <div className="muted">Trigger warnings : {trg}</div>}
+                                {ag && <div className="muted">Âges : {ag}</div>}
 
                                 {/* (optionnel) tags libres hérités */}
-                                {legacy && <div className="muted mt-8">Tags libres: {legacy}</div>}
+                                {legacy && <div className="muted mt-8">Tags libres : {legacy}</div>}
 
                                 {typeof b.avgRating === "number" && (
-                                    <div className="small mt-8">★ {b.avgRating?.toFixed(2)}</div>
+                                    <div className="small mt-8">★ {b.avgRating?.toFixed?.(2)}</div>
                                 )}
                             </div>
                         );
@@ -139,4 +156,3 @@ export default function BooksList({ token, onPickBook }) {
         </Box>
     );
 }
-
